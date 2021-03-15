@@ -3,7 +3,7 @@ const app = express();
 const db= require('./db/db');
 const cors = require('cors');
 const category = require('./routes/categoryRoutes');
-
+const orders = require('./routes/ordersRoutes');
 const PORT = process.env.PORT || 9800;
 
 //parse data for post call
@@ -16,7 +16,7 @@ app.get('/health', (req,res) => {
 })
 
 app.use('/category', category);
-
+app.use('/orders', orders);
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)

@@ -42,7 +42,7 @@ exports.getCatByName = async(req,res) => {
 };
 //get category by Id
 exports.getCatById = async(req,res) => {
-    console.log("test1 ")
+    // console.log("test1 ")
     try{
         const Id = req.params.id
         console.log(Id)
