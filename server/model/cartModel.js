@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 const CartSchema = mongoose.Schema({
     date:{
         type:String,
@@ -6,14 +7,24 @@ const CartSchema = mongoose.Schema({
     },
     userName:{
         type:String,
+        minlength: 3,
         required:true
     },
     userEmail:{
-        type:String,
-        required:true
+        type: String,
+        required: true,
+        unique: [true,"Email is already registered"],
+        validate(value){
+          if(!validator.isEmail(value)){
+            throw new Error("Please enter a valid Email !")
+          }
+        }
     },
     product:{
-        asin:String,
+        asin:{
+            type:String,
+            required: true,
+        },
         productTitle:String,
         beforePrice:Number,
         saving:Number,

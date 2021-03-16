@@ -46,11 +46,11 @@ export const ItemById = async(req,res) => {
 
 };
 
-//get cart by name
+//get cart items by user name
 export const ItemByName = async(req,res) => {
     try{
         const name = req.params.name
-        const result = await Cart.findOne({userName:name})
+        const result = await Cart.find({userName:name}).sort({ date: -1})
 
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
         res.status(200).send({"success":result})

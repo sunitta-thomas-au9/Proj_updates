@@ -64,11 +64,11 @@ export const allOrders = async(req,res) => {
 
 // get order by id
 export const ordersById = async(req,res) => {
-
+    const _id = req.params.id
+    console.log(_id)
     try{
-        const _id = req.params.id
-        console.log(_id)
-        const result = await Orders.findById(_id)
+        
+        const result = await Orders.findById(req.params.id)
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
         res.status(200).send({"success":result})
     }
@@ -79,11 +79,11 @@ export const ordersById = async(req,res) => {
 
 };
 
-//get order by name
+//get orders by Username
 export const ordersByName = async(req,res) => {
     try{
         const name = req.params.name
-        const result = await Orders.findOne({userName:name})
+        const result = await Orders.find({userName:name}).sort({ date: -1})
 
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
         res.status(200).send({"success":result})

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 const OrdersSchema = mongoose.Schema({
     date:{
         type:String,
@@ -6,26 +7,59 @@ const OrdersSchema = mongoose.Schema({
     },
     userName:{
         type:String,
+        minlength: 3,
         required:true
     },
     userEmail:{
-        type:String,
-        required:true
+        type: String,
+        required: true,
+        unique: [true,"Email is already registered"],
+        validate(value){
+          if(!validator.isEmail(value)){
+            throw new Error("Please enter a valid Email !")
+          }
+        }
     },
     orderDetails:{
-        firstName:String,
-        lastName:String,
-        houseAddress:String,
+        firstName:{
+            type:String,
+            required: true,
+        },
+        lastName:{
+            type:String,
+            required: true,
+        },
+        houseAddress:{
+            type:String,
+            required: true,
+        },
         apartment:String,
         city:String,
         state:String,
         country:String,
         postCode:String,
-        phone:String,
-        email:String
-    },
+        phone:{
+            type: Number,
+            minlength: 10,
+            maxlength: 13,
+            required: true,
+            unique: true
+          },
+        email:{
+            type: String,
+            required: true,
+            unique: [true,"Email is already registered"],
+            validate(value){
+              if(!validator.isEmail(value)){
+                throw new Error("Please enter a valid Email !")
+              }
+            }
+    }},
     productDetails:{
-        asin:String,
+        asin:{
+            type:String,
+            required: true,
+        },
         productTitle:String,
         beforePrice:Number,
         saving:Number,

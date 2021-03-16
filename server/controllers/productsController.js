@@ -16,6 +16,21 @@ export const addNew = async(req,res) => {
  
 };
 
+//add multiple products
+export const addMultiple = async(req,res) => {
+    const data = req.body.products
+    
+    try {       
+        const response = await Products.create(data)
+        res.status(201).send({"success":"Successfully placed the order"})
+    }
+    catch(error){
+        res.status(409).send({"err":error.message})
+    }
+ 
+};
+
+
 //get all products
 export const getProducts = async(req,res) => {
     try{
@@ -31,8 +46,9 @@ export const getProducts = async(req,res) => {
 //get products by name
 export const getProductsByName = async(req,res) => {
     try{
-        const products = req.params.products
-        const result = await Product.findOne({products:products})
+        const product = req.params.product
+        // console.log(product)
+        const result = await Products.find({product:product})
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
         res.status(200).send({"success":result})
     }
