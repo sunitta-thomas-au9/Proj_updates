@@ -1,7 +1,8 @@
-const Orders = require('../model/ordersModel');
+
+import Orders from '../model/ordersModel.js';
 
 //Place order
-exports.newOrder = async(req,res) => {
+export const newOrder = async(req,res) => {
     try{
         let data = {
             date : req.body.date,
@@ -39,16 +40,16 @@ exports.newOrder = async(req,res) => {
         }
 
         const response = await Orders.create(data)
-            res.status(200).send({"success":"Successfully Added the category"})
+            res.status(201).send({"success":"Successfully placed the order"})
         }
 
         catch(error){
-            res.status(200).send({"err":error.message})
+            res.status(409).send({"err":error.message})
         }
 };
 
 //get orders
-exports.allOrders = async(req,res) => {
+export const allOrders = async(req,res) => {
     try{
         const result = await Orders.find({})
 
@@ -57,29 +58,29 @@ exports.allOrders = async(req,res) => {
     }
 
     catch(error){
-        res.status(200).send({"err":error.message})
+        res.status(404).send({"err":error.message})
     }
 };
 
 // get order by id
-exports.ordersById = async(req,res) => {
+export const ordersById = async(req,res) => {
+
     try{
         const _id = req.params.id
         console.log(_id)
         const result = await Orders.findById(_id)
-        
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
         res.status(200).send({"success":result})
     }
 
     catch(error){
-        res.status(200).send({"err":error.message})
+        res.status(404).send({"err":error.message})
     }
 
 };
 
 //get order by name
-exports.ordersByName = async(req,res) => {
+export const ordersByName = async(req,res) => {
     try{
         const name = req.params.name
         const result = await Orders.findOne({userName:name})
@@ -93,23 +94,23 @@ exports.ordersByName = async(req,res) => {
     }
 };
 //update order
-exports.updateOrder = async (req, res) => {
+export const updateOrder = async (req, res) => {
     const user = req.body;
 
     try {
         const _id = req.params.id
         const updaterequired = await Orders.findByIdAndUpdate(_id, {orderStatus:req.body.status});
 
-        res.status(200).send({"sucess":"Order is updated successfully"});
+        res.status(204).send({"sucess":"Order is updated successfully"});
     }
 
     catch (error) {
-        res.status(200).send({"err":error.message})
+        res.status(404).send({"err":error.message})
     }
 };
 
 //delete an order
-exports.deleteOrder = async (req, res) => {
+export const deleteOrder = async (req, res) => {
 
     try {
         const _id = req.params.id
@@ -119,6 +120,6 @@ exports.deleteOrder = async (req, res) => {
     }
 
     catch(error) {
-        res.status(200).send({"err":error.message})
+        res.status(404).send({"err":error.message})
     }
 };

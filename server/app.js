@@ -1,9 +1,11 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors'
+import products from './routes/productsRoutes.js';
+import orders from './routes/ordersRoutes.js';
+import cart from './routes/cartRoutes.js';
+import './db/db.js';
+
 const app = express();
-const db= require('./db/db');
-const cors = require('cors');
-const category = require('./routes/categoryRoutes');
-const orders = require('./routes/ordersRoutes');
 const PORT = process.env.PORT || 9800;
 
 //parse data for post call
@@ -15,8 +17,13 @@ app.get('/health', (req,res) => {
   res.send("Health OK!!")
 })
 
-app.use('/category', category);
+app.use('/products', products);
 app.use('/orders', orders);
+app.use('/cart', cart);
+
+app.get("*", (req, res) => {
+  res.send("You've tried reaching a route that doesn't exist.")
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)

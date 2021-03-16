@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const OrdersSchema = mongoose.Schema({
     date:{
         type:String,
@@ -43,5 +43,7 @@ const OrdersSchema = mongoose.Schema({
     }
 
 })
-mongoose.model('orders', OrdersSchema);
-module.exports = mongoose.model('orders');
+
+const orders = new mongoose.model('orders', OrdersSchema);
+
+export default orders
