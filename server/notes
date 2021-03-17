@@ -22,3 +22,20 @@
             3. get one item based on id:- http://localhost:9800/cart/{id} [GET]
             4. delete an item from cart http://localhost:9800/cart/{id} [delete]
 
+            JWT Routes
+            --------------------
+            1. get all :- http://localhost:9800/users/ [get]
+            2. register:- http://localhost:9800/users/register [post]
+            3. login:- http://localhost:9800/users/login [post]
+            4. user profile:- http://localhost:9800/users/profile [get]
+
+            extra
+            5. user by id:- http://localhost:9800/users/{id} [get]
+            6. update user:- http://localhost:9800/users/{id} [put]
+            7. update one to admin:- http://localhost:9800/users/admin/{id} [put]
+            8. deleteone:- http://localhost:9800/users/{id} [delete]
+
+            Google oath and FB oath
+            
+
+

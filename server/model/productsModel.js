@@ -4,6 +4,10 @@ const ProductsSchema = mongoose.Schema({
         type: String,
         required: [true, 'asin should be present']
     },
+    category:{
+        type: String,
+        required: [true, 'Category should be present']
+    },
     product: {
         type: String,
         required: [true, 'product name should be present']

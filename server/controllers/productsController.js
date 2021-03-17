@@ -2,8 +2,8 @@ import Products from '../model/productsModel.js';
 
 //add a product
 export const addNew = async(req,res) => {
-    const { asin, product, type, price, reviews, title, thumbnail } = req.body;
-    const newProduct = new Products({ asin, product, type, price, reviews, title, thumbnail });
+    const { asin, category, product, type, price, reviews, title, thumbnail } = req.body;
+    const newProduct = new Products({ asin, category, product, type, price, reviews, title, thumbnail });
 
     try {
        
