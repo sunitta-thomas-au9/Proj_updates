@@ -55,9 +55,6 @@ export const login = (req,res) => {
 }
 
 export const profile = (req,res) =>{
-    if(!req.session.user) {
-        return res.redirect('/?errmsg=No Session Found! Please Login Again')
-    }
     const token = req.headers['x-access-token'];
     if(!token) return res.status(500).send({auth:false, "err": "No token given"})
     jwt.verify(token,config.secret, (err,data) => {

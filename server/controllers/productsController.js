@@ -36,7 +36,7 @@ export const getProducts = async(req,res) => {
     try{
         const result = await Products.find({})
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
     catch(error){
         res.status(404).send({"err":error.message})
@@ -50,21 +50,20 @@ export const getProductsByName = async(req,res) => {
         // console.log(product)
         const result = await Products.find({product:product})
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
     catch(error){
         res.status(404).send({"err":error.message})
     }
 };
-//get products by Id
-export const getProdsById = async(req,res) => {
-    //  console.log("test1 ")
+//get products by category
+export const getProdsByCategory = async(req,res) => {
     try{
-        const Id = req.params.id
-        console.log(Id)
-        const result = await Products.findById(Id)
+        const category = req.query.category
+        // console.log(category)
+        const result = await Products.find({category:category})
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
     catch(error){
         res.status(404).send({"err":error.message})
