@@ -130,13 +130,13 @@ const PlaceOderDisplay = (props) => {
                                     <tr>
                                         <td>Price</td>
                                         <tr>
-                                            <td>Before: {props.userData.symbol}{props.userData.beforePrice}</td>
+                                            <td>Before: &#8377;{props.userData.beforePrice}</td>
                                         </tr>
                                         <tr>
-                                            <td>Saving: {props.userData.symbol}{props.userData.savingAmount}</td>
+                                            <td>Saving: &#8377;{props.userData.savingAmount}</td>
                                         </tr>
                                         <tr>
-                                            <td>Now: {props.userData.symbol}{props.userData.currentPrice}</td>
+                                            <td>Now: &#8377;{props.userData.currentPrice}</td>
                                         </tr>
                                     </tr>
                                     <tr>
@@ -154,7 +154,7 @@ const PlaceOderDisplay = (props) => {
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>{props.userData.symbol}{props.userData.totalPrice}</td>
+                                        <td>&#8377;{props.userData.totalPrice}</td>
                                     </tr>
                                     <tr>
                                         <td>Shipping</td>

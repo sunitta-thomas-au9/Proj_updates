@@ -13,12 +13,6 @@ const OrdersSchema = mongoose.Schema({
     userEmail:{
         type: String,
         required: true,
-        unique: [true,"Email is already registered"],
-        validate(value){
-          if(!validator.isEmail(value)){
-            throw new Error("Please enter a valid Email !")
-          }
-        }
     },
     orderDetails:{
         firstName:{
@@ -48,13 +42,8 @@ const OrdersSchema = mongoose.Schema({
         email:{
             type: String,
             required: true,
-            unique: [true,"Email is already registered"],
-            validate(value){
-              if(!validator.isEmail(value)){
-                throw new Error("Please enter a valid Email !")
-              }
-            }
-    }},
+        }
+    },
     productDetails:{
         asin:{
             type:String,

@@ -54,7 +54,7 @@ export const allOrders = async(req,res) => {
         const result = await Orders.find({})
 
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
 
     catch(error){
@@ -70,7 +70,7 @@ export const ordersById = async(req,res) => {
         
         const result = await Orders.findById(req.params.id)
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
 
     catch(error){
@@ -86,7 +86,7 @@ export const ordersByName = async(req,res) => {
         const result = await Orders.find({userName:name}).sort({ date: -1})
 
         if(result.length <1) return res.status(404).send({"err":"No Data Found"});
-        res.status(200).send({"success":result})
+        res.status(200).send(result)
     }
 
     catch(error){

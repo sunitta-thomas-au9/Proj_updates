@@ -30,10 +30,11 @@ class Detail extends React.Component {
     }
 
     addDataToCart = (data) => {
+        console.log(data)
         const cartData = {
             "userName": sessionStorage.getItem('userName'),
-            "loggedInEmail": sessionStorage.getItem('loggedInEmail'),
-            "product": data.product
+            "userEmail": sessionStorage.getItem('loggedInEmail'),
+            "product": data
         }
 
         this.props.dispatch(addToCart(cartData));

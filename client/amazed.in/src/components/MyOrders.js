@@ -47,11 +47,11 @@ const MyOrders = (props) => {
                                     <tbody>
                                         <tr>
                                             <td>{order.date}</td>
-                                            <td>{order.fname} {order.lname}</td>
-                                            <td>{order.phone}</td>
-                                            <td>{order.payment}</td>
-                                            <td>{order.status}</td>
-                                            {renderOrderBtn(order.status, order.id)}   
+                                            <td>{order.orderDetails.firstName} {order.orderDetails.lastName}</td>
+                                            <td>{order.orderDetails.phone}</td>
+                                            <td>{order.productDetails.paymentMode}</td>
+                                            <td>{order.orderStatus}</td>
+                                            {renderOrderBtn(order.orderDetails.orderStatus, order._id)}   
                                         </tr>
                                     </tbody>
                                     
@@ -59,10 +59,10 @@ const MyOrders = (props) => {
                                 
                             </div>
                             <div className="panel-body">
-                                <Link to={`/detail/${order.asin}`} style={{textDecoration:"none" ,color:"#67AFCB"}}><h4>{order.productTitle}</h4></Link>
-                                <p style={{display:"inline-block", margin:"20px"}}>Price: {order.currentPrice}</p>
-                                <p style={{display:"inline-block", margin:"20px"}}>Quantity: {order.quantity}</p>
-                                <p style={{display:"inline-block", margin:"20px"}}>Total Price: {order.totalPrice}</p>
+                                <Link to={`/detail/${order.productDetails.asin}`} style={{textDecoration:"none" ,color:"#67AFCB"}}><h4>{order.productDetails.productTitle}</h4></Link>
+                                <p style={{display:"inline-block", margin:"20px"}}>Price: {order.productDetails.currentPrice}</p>
+                                <p style={{display:"inline-block", margin:"20px"}}>Quantity: {order.productDetails.quantity}</p>
+                                <p style={{display:"inline-block", margin:"20px"}}>Total Price: {order.productDetails.totalPrice}</p>
                             </div>
                         </div>
                         <hr/>
@@ -81,12 +81,6 @@ const MyOrders = (props) => {
 
     }
     return(
-        // <div className="container">
-        //     <div className="ord-disp-container">
-                
-        //     </div>
-
-        // </div>
         <div>
             {displayRender(props)}
         </div>

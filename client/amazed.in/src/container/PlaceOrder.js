@@ -32,7 +32,7 @@ class PlaceOrder extends React.Component {
             totalPrice: 1,
             payment: 'COD',
             status: 'Order Placed',
-            delivered: 'False',
+            delivered: false,
             success: '',
             errors: {
                 fname: '',
@@ -57,15 +57,15 @@ class PlaceOrder extends React.Component {
         let userEmail = sessionStorage.getItem('loggedInEmail')
         
         this.setState({
+            ...this.state,
             userName: userName,
             userEmail: userEmail,
-            asin: productData.product.asin,
-            productTitle: productData.product.title,
-            symbol: productData.product.price.symbol,
-            beforePrice: productData.product.price.before_price,
-            savingAmount: productData.product.price.savings_amount,
-            currentPrice: productData.product.price.current_price,
-            totalPrice: (productData.product.price.current_price) * (this.state.quantity)
+            asin: productData.asin,
+            productTitle: productData.title,
+            beforePrice: productData.price.before_price,
+            savingAmount: productData.price.savings_amount,
+            currentPrice: productData.price.current_price,
+            totalPrice: (productData.price.current_price) * (this.state.quantity)
         }, () => console.log(this.state))
         
     }

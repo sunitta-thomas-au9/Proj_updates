@@ -2,7 +2,7 @@ const category_url = 'http://localhost:9800/categories';
 const search_url ='http://localhost:9800/products/category';
 const detail_url = 'http://localhost:9800/details';
 const review_url = 'http://localhost:9800/reviews';
-const order_url = 'http://localhost:8900/order';
+const order_url = 'http://localhost:9800/orders';
 const cart_url = 'http://localhost:9800/cart';
 const reg_url = 'http://localhost:9800/users/register';
 const login_url = 'http://localhost:9800/users/login';
@@ -151,6 +151,7 @@ export function Admin(){
 }
 
 export function addToCart(cartData) {
+    console.log(cartData)
     fetch(cart_url, {
         method: 'POST',
         headers: {
@@ -168,7 +169,7 @@ export function addToCart(cartData) {
 }
 
 export function getFromCart(query){
-    const output = fetch(`${cart_url}?loggedInEmail=${query}`, 
+    const output = fetch(`${cart_url}?email=${query}`, 
         {method:'GET'})
     .then((res) => res.json())
     .catch((err) => console.log(err))

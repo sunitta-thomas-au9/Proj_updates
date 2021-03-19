@@ -19,7 +19,7 @@
             Cart Routes
             -----------------------
             1. add an product to cart http://localhost:9800/cart [POST]
-            2. get one item based on user name:- http://localhost:9800/cart/{name} [GET]
+            2. get one item based on user email:- http://localhost:9800/cart/?email={} [GET]
             3. get one item based on id:- http://localhost:9800/cart/{id} [GET]
             4. delete an item from cart http://localhost:9800/cart/{id} [delete]
 

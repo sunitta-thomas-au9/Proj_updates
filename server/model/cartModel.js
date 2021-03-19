@@ -12,30 +12,21 @@ const CartSchema = mongoose.Schema({
     },
     userEmail:{
         type: String,
-        required: true,
-        unique: [true,"Email is already registered"],
-        validate(value){
-          if(!validator.isEmail(value)){
-            throw new Error("Please enter a valid Email !")
-          }
-        }
+        required: true        
     },
-    product:{
-        asin:{
-            type:String,
-            required: true,
-        },
-        productTitle:String,
-        beforePrice:Number,
-        saving:Number,
-        currentPrice:Number,
-        quantity:Number,
-        totalPrice:Number,
-        paymentMode:String
+    asin:String,    
+    title:String,
+    mainImage:String,
+    rating:String,   
+    price:{
+        before_price:Number,
+        savings_amount:Number,
+        current_price:Number
     }
+
 
 })
 
-const cart = new mongoose.model('cart', CartSchema);
+const cart = new mongoose.model('carts', CartSchema);
 
 export default cart
