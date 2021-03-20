@@ -12,6 +12,8 @@ import {strategy} from './controllers/googleController.js';
 import deatils from './routes/detailsRoutes.js';
 import reviews from './routes/reviewRoutes.js';
 import category from './routes/categoryRoutes.js';
+import coupons from './routes/couponsRoutes.js';
+
 import './db/db.js';
 
 const app = express();
@@ -49,6 +51,7 @@ app.use('/', facebook);
 app.use('/categories', category);
 app.use('/details', deatils);
 app.use('/reviews', reviews);
+app.use('/coupons', coupons);
 app.get("*", (req, res) => {
   res.send("You've tried to reaching a route that doesn't exist.")
 })
