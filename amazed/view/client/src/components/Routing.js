@@ -13,6 +13,7 @@ import SignUp from '../container/SignInLogin/SignUp';
 import Dashboard from '../container/AdminDashboard';
 import GetUser from '../container/SignInLogin/GetUser';
 import Myorder from '../container/Myorder';
+import Profile from './Profile';
 import NotSignedIn from './SignInLogin/NotSignedIn';
 
 const Routing = () => {
@@ -32,6 +33,7 @@ const Routing = () => {
             <Route path='/admin' component={Dashboard}/>
             <Route path='/user' component={GetUser}/>
             <Route path='/notSignedIn' component={NotSignedIn}/>
+            <Route path='/profile' component={Profile}/>
             <Footer/>
         </BrowserRouter>
     );

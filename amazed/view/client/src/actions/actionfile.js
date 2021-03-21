@@ -2,13 +2,14 @@ const category_url = 'http://localhost:9800/categories';
 const search_url ='http://localhost:9800/products/category';
 const detail_url = 'http://localhost:9800/details';
 const review_url = 'http://localhost:9800/reviews';
-const order_url = 'http://localhost:9800/order';
+const order_url = 'http://localhost:9800/orders';
 const cart_url = 'http://localhost:9800/cart';
 const reg_url = 'http://localhost:9800/users/register';
 const login_url = 'http://localhost:9800/users/login';
 const userinfo_url ="http://localhost:9800/users/profile";
 const getAllUser_url = "http://localhost:9800/users";
 const subcategory_url = 'http://localhost:9800/subcategories';
+const coupon_url = 'http://localhost:9800/coupons'
 
 export function categories(){
     const output = fetch(category_url, {method:'GET'})
@@ -152,7 +153,7 @@ export function userDetails(token) {
 }
 
 export function Admin(){
-    const output = fetch(order_url, {method:'GET'})
+    const output = fetch(`${order_url}/all`, {method:'GET'})
     .then((res) => res.json())
 
     return {
@@ -208,7 +209,7 @@ export function removeFromCart(id){
 }
 
 export function GetMyOrders(query){
-    const output = fetch(`${order_url}?${query}`, 
+    const output = fetch(`${order_url}/?${query}`, 
         {method:'GET'})
     .then((res) => res.json())
     .catch((err) => console.log(err))
@@ -233,5 +234,17 @@ export function cancelOrder(id){
     return {
         type: 'CANCEL_ORDER',
         payload: 'Order is cancelled'
+    }
+}
+
+export function coupon(asin){
+    const output = fetch(`${coupon_url}/category?${asin}`, {
+        method:'GET',
+    })
+    .then((res) => res.json())
+
+    return {
+        type: 'COUPON',
+        payload: output
     }
 }

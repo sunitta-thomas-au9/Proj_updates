@@ -1,5 +1,13 @@
 import './PlaceOrder.css';
 const PlaceOderDisplay = (props) => {
+    const renderCoupon =(data) => {
+        // console.log(data)
+        return data.map((item) => {
+            return(
+                <option key={item._id} value={item.discount}>{item.couponName}</option>
+            )
+        })        
+    }
     return(
         <div className="order-outer-container">
                 <form>
@@ -112,7 +120,7 @@ const PlaceOderDisplay = (props) => {
                                     autoComplete="new-off"
                                     value={props.userData.email}
                                     onChange={(event) => props.changeHandler(event.target.name, event.target.value)}
-                                    onBlur={(event) => props.blurHandler(event.target.name, event.target.value)} />
+                                    onBlur={(event) => props.blurHandler(event.target.name, event.target.value)}/>
                                 <p className="error-display">{props.userData.errors.email}</p>
                             </label>
                         </form>
@@ -149,6 +157,24 @@ const PlaceOderDisplay = (props) => {
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coupons</td>
+                                        <td>
+                                            <select id="coupon" name="coupon"
+                                                onChange={(event) => props.couponChangeHandler(event.target.value)}>
+                                                <option>----Select the Coupon----</option>
+                                                    {/* {renderCoupon(props.coupon)} */}
+                                                    {renderCoupon(
+                                                        [{"couponCode":"FLAT50",
+                                                    "couponName":"Flat 50%",
+                                                    "discount":50},
+                                                    {"couponCode":"FLAT60",
+                                                    "couponName":"flat 60%",
+                                                    "discount":50}
+                                                    ])}
                                             </select>
                                         </td>
                                     </tr>
