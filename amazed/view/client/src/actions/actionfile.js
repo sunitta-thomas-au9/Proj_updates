@@ -9,7 +9,9 @@ const login_url = 'http://localhost:9800/users/login';
 const userinfo_url ="http://localhost:9800/users/profile";
 const getAllUser_url = "http://localhost:9800/users";
 const subcategory_url = 'http://localhost:9800/subcategories';
-const coupon_url = 'http://localhost:9800/coupons'
+const coupon_url = 'http://localhost:9800/coupons';
+const contact_url = 'http://localhost:9800/contacts';
+
 
 export function categories(){
     const output = fetch(category_url, {method:'GET'})
@@ -126,7 +128,6 @@ export function signIn(signInDetails) {
     .then(resp=>resp.json())
     .catch((err) => {
         console.log(err)
-        sessionStorage.setItem('invalidUser', 'Invalid email or password');
     })
     return {
         type: 'SIGNIN',
@@ -245,6 +246,23 @@ export function coupon(asin){
 
     return {
         type: 'COUPON',
+        payload: output
+    }
+}
+
+export function submitContacts(contactDetails){
+    const output = fetch(contact_url, {
+        method:'POST',
+        headers: {
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(contactDetails)
+                })
+    .then((res) => res.json())
+
+    return {
+        type: 'CONTACT',
         payload: output
     }
 }

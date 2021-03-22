@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignUpDisplay from '../../components/SignInLogin/SignUpDisplay';
 import { signUp, getAllUsers } from '../../actions/actionfile';
+import { Collection } from 'mongoose';
 class SignUp extends React.Component {
     constructor(){
         super();
@@ -10,6 +11,10 @@ class SignUp extends React.Component {
             userName:'',
             email:'',
             passWord:'',
+            image:'',
+            imageUrl: '',
+            phone:'',
+            location:'',
             errors: {
                 userName: '',
                 email: '',
@@ -25,15 +30,18 @@ class SignUp extends React.Component {
 
 
     changeHandler = (name,value) => {
-        // console.log("frmchange",name,value)
-        this.blurHandler(name, value)
+        console.log("frmchange",name,value)
+        // this.blurHandler(name, value)
         this.setState({
             ...this.state,
             [name]:value            
+        },()=>{
+            console.log(this.state)
         })
     }
 
     blurHandler = (name,value) => {
+        console.log(name,value)
         let errors = this.state.errors
         switch (name) {
             case 'userName':
@@ -78,16 +86,33 @@ class SignUp extends React.Component {
         }
     }
 
-    submitHandler = (event) => {
+    submitHandler = async(event) => {
         event.preventDefault()
-        // console.log("state>>>>>>>>>>",this.state)
+        console.log("state>>>>>>>>>>",this.state)
+        
+        const data = new FormData()
+        data.append("file",this.state.image)
+        data.append("upload_preset","image-uploader")
+        data.append("clone_name","sunitta")
+        console.log(data)
+        try{
+            const resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',{
+            method:'POST',
+            body:data
+        })
+        const respdata = await resp.json();
+        this.setState({ 
+            ...this.state,           
+            imageUrl:respdata.url})
         const userData = {
             name: this.state.userName,
             email: this.state.email,
             password: this.state.passWord,
-            role: sessionStorage.getItem('createAdmin')?"Admin":"User"
+            role: sessionStorage.getItem('createAdmin')?"Admin":"User",
+            phone:this.state.phone,
+            location:this.state.location,
+            imageUrl:this.state.imageUrl
         }
-
         if (this.state.errors.userName !== '' || this.state.errors.email !== ''
             || this.state.errors.passWord !== ''  || userData.name === ''
             || userData.email === '' || userData.password === '') {
@@ -127,6 +152,13 @@ class SignUp extends React.Component {
         }
         
     }
+    catch (err) {
+        this.setState({error:"Invalid User details"})
+    }
+    }
+
+
+       
 
     render() {
         // console.log(this.props.signup.signupStatus)

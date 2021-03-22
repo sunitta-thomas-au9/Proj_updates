@@ -10,6 +10,10 @@ class SignUp extends React.Component {
             userName:'',
             email:'',
             passWord:'',
+            image:'',
+            imageUrl: '',
+            phone:'',
+            location:'',
             errors: {
                 userName: '',
                 email: '',
@@ -78,16 +82,32 @@ class SignUp extends React.Component {
         }
     }
 
-    submitHandler = (event) => {
+    submitHandler = async(event) => {
         event.preventDefault()
         // console.log("state>>>>>>>>>>",this.state)
+        
+        const data = new FormData()
+        data.append("file",this.state.image)
+        data.append("upload_preset","image-uploader")
+        data.append("clone_name","sunitta")
+        try{
+            resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',{
+            method:'POST',
+            body:data
+        })
+        const data = await resp.json();
+        this.setState({ 
+            ...this.state,           
+            imageUrl:data.url})
         const userData = {
             name: this.state.userName,
             email: this.state.email,
             password: this.state.passWord,
-            role: sessionStorage.getItem('createAdmin')?"Admin":"User"
+            role: sessionStorage.getItem('createAdmin')?"Admin":"User",
+            phone:this.state.phone,
+            location:this.state.location,
+            imageUrl:this.state.imageUrl
         }
-
         if (this.state.errors.userName !== '' || this.state.errors.email !== ''
             || this.state.errors.passWord !== ''  || userData.name === ''
             || userData.email === '' || userData.password === '') {
@@ -127,6 +147,13 @@ class SignUp extends React.Component {
         }
         
     }
+    catch (err) {
+        this.setState({error:"Invalid User details"})
+    }
+    }
+
+
+       
 
     render() {
         // console.log(this.props.signup.signupStatus)

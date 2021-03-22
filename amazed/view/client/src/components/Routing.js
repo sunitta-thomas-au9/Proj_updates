@@ -5,7 +5,7 @@ import Home from '../container/Home';
 import Search from '../container/Search';
 import Detail from '../container/Detail';
 import About from './About';
-import Contact from './Contact';
+import ContactUs from '../container/ContactUs';
 import PlaceOrder from '../container/PlaceOrder';
 import Cart from '../container/Cart';
 import SignIn from '../container/SignInLogin/SignIn';
@@ -26,7 +26,7 @@ const Routing = () => {
             <Route path='/buynow' component={PlaceOrder}/>
             <Route path='/cart' component={Cart}/>
             <Route path='/about' component={About}/>
-            <Route path='/contact' component={Contact}/>
+            <Route path='/contact' component={ContactUs}/>
             <Route path='/signin' component={SignIn}/>
             <Route path='/signup' component={SignUp}/>
             <Route path='/orders' component={Myorder}/>
