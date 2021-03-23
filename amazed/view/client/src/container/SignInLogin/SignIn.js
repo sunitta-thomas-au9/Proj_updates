@@ -8,12 +8,12 @@ class SignIn extends React.Component {
     constructor(){
         super();
         this.state = {
-            passWord:'',
+            password:'',
             email:'',
             success:'',
             errors: {
                 email: '',
-                password: '',
+                passWord: '',
                 signinError: ''
             }
         }
@@ -26,16 +26,18 @@ class SignIn extends React.Component {
         })
     }
 
-    blurHandler = (name,value)=> {
-        console.log(name,value)
+    blurHandler = (name,value)=> {	
+        console.log(name,value)	
     }
 
     onSubmit = (event)=> {
-        event.preventDefault()
+        event.preventDefault();
+        
         const signInDetails = {
             email: this.state.email,
             password: this.state.password
-        }    
+        }
+              
         this.props.dispatch(signIn(signInDetails));
     }
 
@@ -55,6 +57,7 @@ class SignIn extends React.Component {
         }
         else {
             sessionStorage.setItem('invalidUser', true);
+
             this.setState({
                 errors: { ...this.state.errors, signinError: "Invalid email or password" }
             })

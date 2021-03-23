@@ -12,7 +12,6 @@ const subcategory_url = 'http://localhost:9800/subcategories';
 const coupon_url = 'http://localhost:9800/coupons';
 const contact_url = 'http://localhost:9800/contacts';
 
-
 export function categories(){
     const output = fetch(category_url, {method:'GET'})
     .then((res) => res.json())
@@ -125,9 +124,9 @@ export function signIn(signInDetails) {
         },
         body: JSON.stringify(signInDetails)
         })
-    .then(resp=>resp.json())
+    .then(res => res.json())
     .catch((err) => {
-        console.log(err)
+        console.log(err);
     })
     return {
         type: 'SIGNIN',
@@ -238,31 +237,82 @@ export function cancelOrder(id){
     }
 }
 
-export function coupon(asin){
-    const output = fetch(`${coupon_url}/category?${asin}`, {
-        method:'GET',
+export function coupon(asin){	
+    const output = fetch(`${coupon_url}/category?${asin}`, {	
+        method:'GET',	
+    })	
+    .then((res) => res.json())	
+    return {	
+        type: 'COUPON',	
+        payload: output	
+    }	
+}
+
+export function submitContacts(contactDetails){	
+    const output = fetch(contact_url, {	
+        method:'POST',	
+        headers: {	
+                    'Accept':'application/json',	
+                    'Content-Type':'application/json'	
+                },	
+                body: JSON.stringify(contactDetails)	
+                })	
+    .then((res) => res.json())	
+    return {	
+        type: 'CONTACT',		
+        payload: output	
+    }	
+}
+
+export function createCoupon(couponData){
+    const output = fetch(coupon_url,{
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(couponData)
     })
-    .then((res) => res.json())
+    .then(res => res.json())
 
     return {
-        type: 'COUPON',
+        type: 'CREATE_COUPON',
         payload: output
     }
 }
 
-export function submitContacts(contactDetails){
-    const output = fetch(contact_url, {
-        method:'POST',
-        headers: {
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify(contactDetails)
-                })
-    .then((res) => res.json())
+export function getAllCoupons(){
+    const output = fetch(coupon_url, 
+        {method:'GET'})
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
     return {
-        type: 'CONTACT',
+        type: 'ALL_COUPONS',
+        payload: output
+    }
+}
+
+export function getCouponByCategory(number){
+    const output = fetch(`${coupon_url}/category/?categoryNumber=${number}`,
+        {method:'GET'})
+    .then(res => res.json())
+    .catch(err => console.log(err))
+
+    return {
+        type: 'COUPON_BY_CATEGORY',
+        payload: output
+    }
+}
+
+export function deleteCoupon(id){
+    const output = fetch(`${coupon_url}/${id}`, 
+        {method:'DELETE'})
+    .then(res => res.json())
+    .catch(err => console.log(err))
+
+    return {
+        type: 'DELETE_COUPON',
         payload: output
     }
 }

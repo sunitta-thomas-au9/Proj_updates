@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignUpDisplay from '../../components/SignInLogin/SignUpDisplay';
 import { signUp, getAllUsers } from '../../actions/actionfile';
-import { Collection } from 'mongoose';
 class SignUp extends React.Component {
     constructor(){
         super();
@@ -11,9 +10,9 @@ class SignUp extends React.Component {
             userName:'',
             email:'',
             passWord:'',
-            image:'',
-            imageUrl: '',
-            phone:'',
+            image:'',	
+            imageUrl: '',	
+            phone:'',	
             location:'',
             errors: {
                 userName: '',
@@ -30,18 +29,15 @@ class SignUp extends React.Component {
 
 
     changeHandler = (name,value) => {
-        console.log("frmchange",name,value)
+        console.log("frmchange",name,value)	
         // this.blurHandler(name, value)
         this.setState({
             ...this.state,
             [name]:value            
-        },()=>{
-            console.log(this.state)
         })
     }
 
     blurHandler = (name,value) => {
-        console.log(name,value)
         let errors = this.state.errors
         switch (name) {
             case 'userName':
@@ -86,79 +82,76 @@ class SignUp extends React.Component {
         }
     }
 
-    submitHandler = async(event) => {
-        event.preventDefault()
-        console.log("state>>>>>>>>>>",this.state)
-        
-        const data = new FormData()
-        data.append("file",this.state.image)
-        data.append("upload_preset","image-uploader")
-        data.append("clone_name","sunitta")
-        console.log(data)
-        try{
-            const resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',{
-            method:'POST',
-            body:data
-        })
-        const respdata = await resp.json();
-        this.setState({ 
-            ...this.state,           
-            imageUrl:respdata.url})
-        const userData = {
-            name: this.state.userName,
-            email: this.state.email,
-            password: this.state.passWord,
-            role: sessionStorage.getItem('createAdmin')?"Admin":"User",
-            phone:this.state.phone,
-            location:this.state.location,
-            imageUrl:this.state.imageUrl
-        }
-        if (this.state.errors.userName !== '' || this.state.errors.email !== ''
-            || this.state.errors.passWord !== ''  || userData.name === ''
-            || userData.email === '' || userData.password === '') {
-    
-            this.setState({
-                errors: { ...this.state.errors, emptyField: "All fields are required and should have proper entries." }
-            });
-        }
-        
-        else{
-            // console.log("USER detail>>>>>>>>>>",JSON.stringify(userDetails))
-            const userDetails = this.props.allUsersDetails
-            console.log(userDetails)
-            const filteredUserData = userDetails.filter((user) => {
-               return (user.email === this.state.email)
-            })
-            console.log(filteredUserData)
-            if(filteredUserData.length > 0) {
-                alert("This email is already registerd with us.Please login with the same email and password or register with a new email");
-                this.setState({
-                    userName:'',
-                    email:'',
-                    passWord:'',
-                })
-                this.props.history.push('/signup');
-            }
-            else{
-                this.props.dispatch(signUp(userData));
-                if(sessionStorage.getItem('createAdmin')){
-                    alert("Admin Created Successfully!");
-                    this.props.history.push('/admin');
-                }
-                else{
-                    this.props.history.push('/signin');
-                }
-            }       
-        }
-        
+    submitHandler = async(event) => {	
+        event.preventDefault()	
+        console.log("state>>>>>>>>>>",this.state)	
+        	
+        const data = new FormData()	
+        data.append("file",this.state.image)	
+        data.append("upload_preset","image-uploader")	
+        data.append("clone_name","sunitta")	
+        console.log(data)	
+        try{	
+            const resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',{	
+            method:'POST',	
+            body:data	
+        })	
+        const respdata = await resp.json();	
+        this.setState({ 	
+            ...this.state,           	
+            imageUrl:respdata.url})	
+        const userData = {	
+            name: this.state.userName,	
+            email: this.state.email,	
+            password: this.state.passWord,	
+            role: sessionStorage.getItem('createAdmin')?"Admin":"User",	
+            phone:this.state.phone,	
+            location:this.state.location,	
+            imageUrl:this.state.imageUrl	
+        }	
+        if (this.state.errors.userName !== '' || this.state.errors.email !== ''	
+            || this.state.errors.passWord !== ''  || userData.name === ''	
+            || userData.email === '' || userData.password === '') {	
+    	
+            this.setState({	
+                errors: { ...this.state.errors, emptyField: "All fields are required and should have proper entries." }	
+            });	
+        }	
+        	
+        else{	
+            // console.log("USER detail>>>>>>>>>>",JSON.stringify(userDetails))	
+            const userDetails = this.props.allUsersDetails	
+            console.log(userDetails)	
+            const filteredUserData = userDetails.filter((user) => {	
+               return (user.email === this.state.email)	
+            })	
+            console.log(filteredUserData)	
+            if(filteredUserData.length > 0) {	
+                alert("This email is already registerd with us.Please login with the same email and password or register with a new email");	
+                this.setState({	
+                    userName:'',	
+                    email:'',	
+                    passWord:'',	
+                })	
+                this.props.history.push('/signup');	
+            }	
+            else{	
+                this.props.dispatch(signUp(userData));	
+                if(sessionStorage.getItem('createAdmin')){	
+                    alert("Admin Created Successfully!");	
+                    this.props.history.push('/admin');	
+                }	
+                else{	
+                    this.props.history.push('/signin');	
+                }	
+            }       	
+        }	
+        	
+    }	
+    catch (err) {	
+        this.setState({error:"Invalid User details"})	
+    }	
     }
-    catch (err) {
-        this.setState({error:"Invalid User details"})
-    }
-    }
-
-
-       
 
     render() {
         // console.log(this.props.signup.signupStatus)

@@ -18,7 +18,8 @@ const SignInDisplay = (props) => {
                         name="email"
                         value={props.userDetails.email}
                         onChange={(event) => props.changeHandler(event.target.name, event.target.value)}
-                        onBlur={(event) => props.blurHandler(event.target.name, event.target.value)}/>
+                        onBlur={(event) => props.blurHandler(event.target.name, event.target.value)}
+                    />
                     <p className="error-display">{props.userDetails.errors.userName}</p>
                 </div>
 
@@ -31,7 +32,8 @@ const SignInDisplay = (props) => {
                         name="password"
                         value={props.userDetails.password}
                         onChange={(event) => props.changeHandler(event.target.name, event.target.value)}
-                        onBlur={(event) => props.blurHandler(event.target.name, event.target.value)}/>
+                        onBlur={(event) => props.blurHandler(event.target.name, event.target.value)}
+                    />
                     <p className="error-display">{props.userDetails.errors.userName}</p>
                 </div>
 

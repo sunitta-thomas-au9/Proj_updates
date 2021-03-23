@@ -28,4 +28,4 @@ const ContactSchema = mongoose.Schema({
 
 const contacts = new mongoose.model('contacts', ContactSchema);
 
-export default contacts
+export default contacts;

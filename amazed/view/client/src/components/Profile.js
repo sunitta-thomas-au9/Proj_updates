@@ -42,6 +42,9 @@ class Profile extends Component{
                                             <h6 class="text-muted f-w-400">{this.state.userDetails.phone}</h6>
                                         </div>
                                     </div>
+                                    {
+                                    (this.state.userDetails.role !== 'Admin') && 
+                                    <>
                                     <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Details</h6>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -57,6 +60,28 @@ class Profile extends Component{
                                             </h6>
                                         </div>
                                     </div>
+                                    </> 
+                                    }
+                                    {
+                                    (this.state.userDetails.role === 'Admin') && 
+                                    <>
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Details</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Add Coupon</p>
+                                            <h6 class="text-muted f-w-400">
+                                                <Link to="/create_coupon" style={{color:"#298EDC"}}>@coupons</Link>
+                                            </h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Add Products</p>
+                                            <h6 class="text-muted f-w-400">
+                                            <Link to="/product" style={{color:"#298EDC"}}>@products</Link>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    </> 
+                                    }
                                 </div>
                             </div>
                         </div>

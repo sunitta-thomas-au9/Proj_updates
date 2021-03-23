@@ -62,15 +62,21 @@ class Header extends React.Component {
             return (
                 <li>
                     <button className="headerBtn">
-                        <Link style={{textDecoration:'none', color:'white'}} to="/admin"><i className="fa fa-user"></i> Admin</Link>
+                        <Link style={{textDecoration:'none', color:'white'}} to="/admin">
+                            <i className="fa fa-user"></i> Admin
+                        </Link>
                     </button>
 
                     <button className="headerBtn">
-                        <Link style={{textDecoration:'none', color:'white'}} to="/coupon">Coupons</Link>
+                        <Link style={{textDecoration:'none', color:'white'}} to="/coupon">
+                            <i className="fa fa-tag"></i> Coupons
+                        </Link>
                     </button>
 
                     <button className="headerBtn">
-                        <Link style={{textDecoration:'none', color:'white'}} to="/product">Products</Link>
+                        <Link style={{textDecoration:'none', color:'white'}} to="/product">
+                            <i className="fa fa-product-hunt"></i> Products
+                        </Link>
                     </button>
                 </li>
             );
