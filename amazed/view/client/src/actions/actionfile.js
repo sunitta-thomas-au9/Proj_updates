@@ -317,7 +317,23 @@ export function deleteCoupon(id){
         payload: output
     }
 }
+export function updateCoupon(id, data){
+    const output = fetch(`${coupon_url}/${id}`,{ 
+        method:'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
+    return {
+        type: 'UPDATE_COUPON',
+        payload: output
+    }
+}
 export function updateProfile(userDetails){	
     const id = userDetails._id
     const output = fetch(`${user_url}/${id}`, {	
