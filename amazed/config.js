@@ -9,8 +9,8 @@ const config = {
       FACEBOOK_APP_SECRET:'eb3b5bced032f18576c194e4425d8970'
       },
       auth:{
-         user:'sunimani456@gmail.com',
-         pass:'H@nn@H123'
+         user:'customerserviceamazed@gmail.com',
+         pass:'Am@zed123'
       }
 }
 export default config;
