@@ -18,6 +18,7 @@ import CreateCoupon from '../container/CreateCoupon';
 import Profile from '../container/UserProfile';
 import UserCoupon from '../container/UserCoupons';
 import NotSignedIn from './SignInLogin/NotSignedIn';
+import PaymentProcess from '../container/PaymentProcess';
 
 const Routing = () => {
     return (
@@ -40,6 +41,7 @@ const Routing = () => {
             <Route path='/usercoupon' component={UserCoupon}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/notSignedIn' component={NotSignedIn}/>
+            <Route path='/payment' component={PaymentProcess}/>
             <Footer/>
         </BrowserRouter>
     );

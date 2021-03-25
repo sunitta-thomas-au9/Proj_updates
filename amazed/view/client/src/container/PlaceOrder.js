@@ -13,6 +13,7 @@ class PlaceOrder extends React.Component {
         this.state = {
             userName: '',
             userEmail: '',
+            userPhone:'',
             fname: '',
             lname: '',
             houseadd: '',
@@ -58,12 +59,14 @@ class PlaceOrder extends React.Component {
         let productData = JSON.parse(sessionStorage.getItem('productData'))
         let userName = sessionStorage.getItem('userName')
         let userEmail = sessionStorage.getItem('loggedInEmail')
-        console.log(productData)
+        let userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+        // console.log(userDetails)
         
         this.setState({	
             ...this.state,	
             userName: userName,	
-            userEmail: userEmail,	
+            userEmail: userEmail,
+            userPhone:userDetails.phone,	
             asin: productData.asin,	
             productTitle: productData.title,	
             beforePrice: productData.price.before_price,	
@@ -143,15 +146,29 @@ class PlaceOrder extends React.Component {
             errors, [name]: value
         })
     }
-
+    paymentChangeHandler = (name,value) => {
+        this.changeHandler(name,value);
+        this.paymentProcess();
+    }
+    paymentProcess = () => {
+        let orderDetails = {
+                userName:this.state.userName,
+                userEmail:this.state.userEmail,
+                userPhone:this.state.userPhone,
+                grandTotal:this.state.grandTotal?this.state.grandTotal:this.state.totalPrice
+            };
+            // console.log(orderDetails)
+            this.props.history.push({
+                pathname:'/payment',
+                state: {orderDetails:orderDetails}
+            })
+    }
     changeHandler = (name, value) => {
-        // console.log(name,value)
         this.blurHandler(name, value) 
         this.setState({
             [name]: value,
 
         })
-        // console.log(this.state)
     }
 
     quantitychangeHandler = (value) => {
@@ -181,6 +198,7 @@ class PlaceOrder extends React.Component {
             date: tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear(),
             userName:this.state.userName,
             userEmail:this.state.userEmail,
+            userPhone:this.state.userPhone,
             fname: this.state.fname,
             lname: this.state.lname,
             houseadd: this.state.houseadd,
@@ -254,13 +272,13 @@ class PlaceOrder extends React.Component {
                 error = {this.state.errors.emptyFields}
                 success = {this.state.success}
                 couponChangeHandler = {this.couponChangeHandler}
+                paymentChangeHandler = {this.paymentChangeHandler}
             />
             )
         
         }
-        
-
     }
+    
     render() {
         // let productData = JSON.parse(sessionStorage.getItem('productData'))
         

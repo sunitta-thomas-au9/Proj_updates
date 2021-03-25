@@ -11,6 +11,10 @@ const config = {
       auth:{
          user:'customerserviceamazed@gmail.com',
          pass:'Am@zed123'
+      },
+      razorpay_auth:{
+         key_id: 'rzp_test_H5QVr5aOyhoagJ',
+         key_secret: 'xMSshyjoxNdHXo8SondWv2at'
       }
 }
 export default config;
