@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from "axios";
-import { placeOrder } from '../actions/actionfile';
-import PlaceOrder from './PlaceOrder';
 const transaction_url = 'http://localhost:9800/transaction';
-const razonr_key = 'rzp_test_7lDVwruhXd4VIB'
+const razor_key = 'rzp_test_i3q74EogT2Neiu'
 class PaymentProcess extends React.Component {
   constructor(props){
     super(props);
@@ -24,14 +22,11 @@ class PaymentProcess extends React.Component {
         amount:orderDetails.grandTotal
     },()=>this.openPayModal(this.state.amount))
 }
-redirect = (response) => {
-  console.log("redirect")
-}
 openPayModal = (amt) => {
   let amount = amt * 100; 
   console.log(amount)
   let options = {
-    "key": process.env.razor_key || razonr_key,
+    "key": process.env.razor_key || razor_key,
     "amount": amount, // 2000 paise = INR 20, amount in paisa
     "currency":'INR',
     "name": 'Amazed.in',
@@ -46,7 +41,17 @@ openPayModal = (amt) => {
             transactionamount : amount,
           }
           axios.post(`${transaction_url}/payment`,values)
-          .then(res=>{alert("success")})
+          .then(res=>{
+            sessionStorage.setItem('transaction',JSON.stringify(res))
+            // alert("success")
+            let redirect_url;
+            if (typeof res.razorpay_payment_id == 'undefined' ||  res.razorpay_payment_id < 1) {
+              redirect_url = '/thankyou';
+            } else {
+              alert("Transaction failed, please try again")
+            }
+            window.location.replace(redirect_url);
+          })
           .catch(e=>console.log(e))
       },
     "prefill":{
@@ -70,10 +75,7 @@ axios.post(`${transaction_url}/order`,{amount:amount})
     let rzp1 = new window.Razorpay(options);
     rzp1.open();
 })
-.then(res=>this.props.history.push({
-  pathname:'/buynow',
-  state: {transaction:res}
-}))
+.then(res=>console.log(res))
 .catch(e=>console.log(e))
 }
 

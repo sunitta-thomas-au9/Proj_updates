@@ -13,7 +13,6 @@ class PlaceOrder extends React.Component {
         this.state = {
             userName: '',
             userEmail: '',
-            userPhone:'',
             fname: '',
             lname: '',
             houseadd: '',
@@ -59,14 +58,11 @@ class PlaceOrder extends React.Component {
         let productData = JSON.parse(sessionStorage.getItem('productData'))
         let userName = sessionStorage.getItem('userName')
         let userEmail = sessionStorage.getItem('loggedInEmail')
-        let userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
-        // console.log(userDetails)
         
         this.setState({	
             ...this.state,	
             userName: userName,	
             userEmail: userEmail,
-            userPhone:userDetails.phone,	
             asin: productData.asin,	
             productTitle: productData.title,	
             beforePrice: productData.price.before_price,	
@@ -146,15 +142,10 @@ class PlaceOrder extends React.Component {
             errors, [name]: value
         })
     }
-    paymentChangeHandler = (name,value) => {
-        this.changeHandler(name,value);
-        this.paymentProcess();
-    }
     paymentProcess = () => {
         let orderDetails = {
                 userName:this.state.userName,
                 userEmail:this.state.userEmail,
-                userPhone:this.state.userPhone,
                 grandTotal:this.state.grandTotal?this.state.grandTotal:this.state.totalPrice
             };
             // console.log(orderDetails)
@@ -198,7 +189,6 @@ class PlaceOrder extends React.Component {
             date: tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear(),
             userName:this.state.userName,
             userEmail:this.state.userEmail,
-            userPhone:this.state.userPhone,
             fname: this.state.fname,
             lname: this.state.lname,
             houseadd: this.state.houseadd,
@@ -229,6 +219,10 @@ class PlaceOrder extends React.Component {
                 errors: { ...this.state.errors, emptyFields: "All fields are required" }
             })
             
+        }
+        else if(orderData.payment === 'NetBanking' || orderData.payment === 'CDcard') {
+            this.props.dispatch(placeOrder(orderData));
+            this.paymentProcess();
         }
         else {
             this.props.dispatch(placeOrder(orderData));

@@ -220,7 +220,7 @@ const PlaceOderDisplay = (props) => {
                                     type="radio" 
                                     name="payment" 
                                     value="NetBanking"
-                                    onChange={(event) => props.paymentChangeHandler(event.target.name, event.target.value)}/>
+                                    onChange={(event) => props.changeHandler(event.target.name, event.target.value)}/>
                                 <label className="order-label1">Net Banking</label>
                             </div>
                             <div className="radios">
@@ -236,7 +236,7 @@ const PlaceOderDisplay = (props) => {
                                     type="radio" 
                                     name="payment" 
                                     value="CDcard"
-                                    onChange={(event) => props.paymentChangeHandler(event.target.name, event.target.value)}/>
+                                    onChange={(event) => props.changeHandler(event.target.name, event.target.value)}/>
                                 <label className="order-label1">Credit / Debit Card</label>
                                 <span>
                                     <img src="https://www.logolynx.com/images/logolynx/c3/c36093ca9fb6c250f74d319550acac4d.jpeg" alt="" width="50" />

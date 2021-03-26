@@ -13,8 +13,8 @@ const config = {
          pass:'Am@zed123'
       },
       razorpay_auth:{
-         key_id: 'rzp_test_H5QVr5aOyhoagJ',
-         key_secret: 'xMSshyjoxNdHXo8SondWv2at'
+         key_id: 'rzp_test_i3q74EogT2Neiu',
+         key_secret: 'TjlKCpgKW7jwS2NRORjQZFxk'
       }
 }
 export default config;
