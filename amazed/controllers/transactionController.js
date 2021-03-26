@@ -3,12 +3,12 @@ import crypto from 'crypto';
 import Transaction from '../model/transctions.js';
 import Order from '../model/ordersModel.js';
 
-// import config from '../config.js';
+import config from '../config.js';
 
 export const newOrders = (req,res) => {
     let instance = new Razorpay({
-        key_id: 'rzp_test_i3q74EogT2Neiu',
-        key_secret: 'TjlKCpgKW7jwS2NRORjQZFxk'
+        key_id: config.razorpay_auth.key_id,
+        key_secret: config.razorpay_auth.key_secret
       })
       let options = {
           amount: req.body.amount?req.body.amount:100,  // amount in the smallest currency unit
@@ -25,7 +25,7 @@ export const newOrders = (req,res) => {
 }
 
 export const newPayment = (req,res) => {
-    const generated_signature = crypto.createHmac('sha256','TjlKCpgKW7jwS2NRORjQZFxk')
+    const generated_signature = crypto.createHmac('sha256',config.razorpay_auth.key_secret)
     generated_signature.update(req.body.razorpay_order_id+"|"+ req.body.transactionid)
     if ( generated_signature.digest('hex') === req.body.razorpay_signature){
             const transaction = new Transaction({
