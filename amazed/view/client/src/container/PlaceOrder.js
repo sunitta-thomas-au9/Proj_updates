@@ -142,13 +142,8 @@ class PlaceOrder extends React.Component {
             errors, [name]: value
         })
     }
-    paymentProcess = () => {
-        let orderDetails = {
-                userName:this.state.userName,
-                userEmail:this.state.userEmail,
-                grandTotal:this.state.grandTotal?this.state.grandTotal:this.state.totalPrice
-            };
-            // console.log(orderDetails)
+    paymentProcess = (orderDetails) => {
+        console.log(orderDetails)
             this.props.history.push({
                 pathname:'/payment',
                 state: {orderDetails:orderDetails}
@@ -207,7 +202,7 @@ class PlaceOrder extends React.Component {
             quantity: this.state.quantity,
             totalPrice: this.state.totalPrice,
             couponDiscount: this.state.couponDiscount,
-            grandTotal: this.state.grandTotal,
+            grandTotal: this.state.grandTotal?this.state.grandTotal:this.state.totalPrice,
             payment: this.state.payment,
             status: this.state.status,
             delivered: this.state.delivered
@@ -221,8 +216,7 @@ class PlaceOrder extends React.Component {
             
         }
         else if(orderData.payment === 'NetBanking' || orderData.payment === 'CDcard') {
-            this.props.dispatch(placeOrder(orderData));
-            this.paymentProcess();
+            this.paymentProcess(orderData);
         }
         else {
             this.props.dispatch(placeOrder(orderData));

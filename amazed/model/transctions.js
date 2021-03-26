@@ -4,7 +4,7 @@ const TansactionSchema = mongoose.Schema({
         type:String
     },
     transactionamount:{
-        type:String
+        type:Number
     },
 });
 const transactions = new mongoose.model('transactions',TansactionSchema);

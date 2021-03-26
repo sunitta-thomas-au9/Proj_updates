@@ -1,20 +1,44 @@
 import React from 'react';
 import './Thankyou.css';
+const trans_url ='http://localhost:9800/transaction';
+const order_url ='http://localhost:9800/orders'
 class ThankYou extends React.Component {
     constructor(){
         super() 
         this.state={
-            details:''
+            details:'',
+            orderDetails:''
         }
     }
     componentDidMount(){
         const transInfo = JSON.parse(sessionStorage.getItem('transaction'))
+        const orderDetails = JSON.parse(sessionStorage.getItem('orderDetails'))
+        this.setState({
+            orderDetails:orderDetails
+        })
         const id = transInfo.data.transaction._id
-        fetch(`http://localhost:9800/transaction/${id}`,
+        fetch(`${trans_url}/${id}`,
             {method:'GET'})
             .then(res => res.json())
             .then(res=> this.setState({
                 details:res
+            },()=>{
+                this.setState({
+                    orderDetails:{
+                        ...orderDetails,
+                        transactionid:this.state.details.transactionid,
+                        transactionamount:this.state.details.transactionamount
+                    }
+                },()=>{fetch(order_url,{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(this.state.orderDetails)
+        })
+        .then(res=>console.log(res))
+               })
             })
         )
     }            
@@ -23,11 +47,6 @@ class ThankYou extends React.Component {
         console.log(details)
         if(details){
             return(
-                // <div>
-                //     <p>Thank you for the purchase</p>
-                //     <p>Your refernce number is {details.transactionid}</p>
-                //     <p>AMount {details.transactionamount}</p>
-                // </div>
                 <div className="container">
                     <div className="content-box">
                         <div className="tick-mark">
@@ -38,8 +57,8 @@ class ThankYou extends React.Component {
                             <h3>Thank you for the purchase</h3>
                         </div>
                         <div className="payment-info">
-                            <h4>Your refernce number is:: <span className="payment-details">{details.transactionid}</span></h4>
-                            <h4>Amount paid:: <span className="payment-details">{details.transactionamount}</span></h4>
+                            <h4>Your refernce number <span className="payment-details">{details.transactionid}</span></h4>
+                            <h4>Amount paid <span className="payment-details">{details.transactionamount}</span></h4>
                         </div>
                         <div className="payment-buttons">
                             <button className="btn btn-warning payment-buttons1"
@@ -51,10 +70,6 @@ class ThankYou extends React.Component {
                             >Products on cart</button>
                         </div>
                         
-                           
-                        
-                        
-
                     </div>
 
                 </div>

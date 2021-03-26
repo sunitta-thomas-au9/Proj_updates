@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+
 const transaction_url = 'http://localhost:9800/transaction';
 const razor_key = 'rzp_test_i3q74EogT2Neiu'
 class PaymentProcess extends React.Component {
@@ -13,6 +14,7 @@ class PaymentProcess extends React.Component {
   componentDidMount (props) {
     const orderDetails = this.props.location.state.orderDetails
     // console.log(orderDetails)
+    sessionStorage.setItem('orderDetails',JSON.stringify(orderDetails))
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
         script.async = true;
@@ -42,8 +44,7 @@ openPayModal = (amt) => {
           }
           axios.post(`${transaction_url}/payment`,values)
           .then(res=>{
-            sessionStorage.setItem('transaction',JSON.stringify(res))
-            // alert("success")
+            sessionStorage.setItem('transaction',JSON.stringify(res))            
             let redirect_url;
             if (typeof res.razorpay_payment_id == 'undefined' ||  res.razorpay_payment_id < 1) {
               redirect_url = '/thankyou';
