@@ -3,19 +3,60 @@ import Products from '../model/productsModel.js';
 
 //add a product
 export const addNew = async(req,res) => {
-    const { asin, category, product, type, price, reviews, title, thumbnail } = req.body;
+
+    const { asin, category, product, type, price, reviews, title, thumbnail, description, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = req.body;
     const newProduct = new Products({ asin, category, product, type, price, reviews, title, thumbnail });
 
+    const date = new Date();
+    const month = date.toLocaleString('default', { month: 'long' });
+
+    let data = {
+        asin: asin,
+        title: title,
+        description: description,
+        feature_bullets: req.body.features.split(','),
+        reviews: reviews,
+        price: price,
+        total_images: images.length,
+        images: images,
+        product_information: {
+            dimensions: dimensions,
+            weight: weight,
+            available_from: `${date.getDay()} ${month} ${date.getFullYear()}`,
+            available_from_utc: date.toISOString(),
+            manufacturer: manufacturer,
+            model_number: model_number,
+            sold_by: sold_by,
+            fulfilled_by: "Amazed",
+            brand: brand
+        }
+    }
+
+    const reviewData = {
+        asin: asin
+    }
+
     try {
+
+        const asinPresent = await Details.findOne({"asin": asin});
+
+        if(asinPresent) {
+            return res.status(409).send({"err": "asin given by you is already present"})
+        }
        
-        const response = await newProduct.save()
-        res.status(201).send({"success":"Successfully Added the product"})
+        await newProduct.save()
+
+        await Details.create(data);
+
+        await Review.create(reviewData);
+
+
+        return res.status(200).send({"success":"Successfully Added the product"})
     }
     catch(error){
         res.status(409).send({"err":error.message})
     }
- 
-};
+}
 
 //add multiple products
 export const addMultiple = async(req,res) => {

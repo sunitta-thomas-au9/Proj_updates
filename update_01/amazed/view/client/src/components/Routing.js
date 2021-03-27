@@ -19,7 +19,8 @@ import Profile from '../container/UserProfile';
 import UserCoupon from '../container/UserCoupons';	
 import NotSignedIn from './SignInLogin/NotSignedIn';	
 import PaymentProcess from '../container/PaymentProcess';	
-import ThankYou from './ThankYou';	
+import ThankYou from './ThankYou';
+import CreateProducts from '../container/CreateProducts';
 const Routing = () => {	
     return (	
         <BrowserRouter>	
@@ -42,7 +43,9 @@ const Routing = () => {
             <Route path='/profile' component={Profile}/>	
             <Route path='/notSignedIn' component={NotSignedIn}/>	
             <Route path='/payment' component={PaymentProcess}/>	
-            <Route path='/thankyou' component={ThankYou}/>	
+            <Route path='/thankyou' component={ThankYou}/>
+            <Route path='/create_product' component={CreateProducts}/>
+            	
             <Footer/>	
         </BrowserRouter>	
     );	

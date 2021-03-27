@@ -8,6 +8,7 @@ const subcategory_url = '/subcategories';
 const coupon_url = '/coupons';
 const contact_url = '/contacts';
 const user_url = '/users';
+const product_url = '/product'
 
 export function categories(){
     const output = fetch(category_url, {method:'GET'})
@@ -346,6 +347,23 @@ export function updateCoupon(id, data){
 
     return {
         type: 'UPDATE_COUPON',
+        payload: output
+    }
+}
+
+export function createProduct(productData){
+    const output = fetch(coupon_url,{
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+    })
+    .then(res => res.json())
+
+    return {
+        type: 'CREATE_PRODUCT',
         payload: output
     }
 }

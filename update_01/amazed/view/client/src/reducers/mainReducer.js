@@ -5,6 +5,7 @@ import order from './order';
 import signup from './signup';
 import coupon from './coupon';
 import contact from './contact';
+import product from './product';
 
 const rootReducer = combineReducers({
     category,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     order,
     signup,
     coupon,
-    contact      
+    contact,
+    product    
 });
 
 export default rootReducer;
