@@ -1,15 +1,20 @@
 import details from '../model/detailsModel.js';
 import Details from '../model/detailsModel.js';
 import Review from '../model/reviewModel.js';
+import moment from 'moment';
 
 //Add product detail
 export const addNew = async (req, res) => {
     const { asin, title, description,reviews, price, discount, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = req.body;
     const features = req.body.features.split(',');
-    const date = new Date();
-    const month = date.toLocaleString('default', { month: 'long' });
+    let cur_date = moment(new Date(Date.now())).format('YYYY-MM-DD HH:mm:ss');
 
     try {
+
+        if(!req.session.user && req.session.user.role !=='Admin') {
+            return res.status(400).send('No Session Found! Please Login Again')
+        }
+
         let data = {
             asin: asin,
             title: title,
@@ -22,8 +27,8 @@ export const addNew = async (req, res) => {
             product_information: {
                 dimensions: dimensions,
                 weight: weight,
-                available_from: `${date.getDay()} ${month} ${date.getFullYear()}`,
-                available_from_utc: date.toISOString(),
+                available_from: cur_date,
+                available_from_utc: cur_date,
                 manufacturer: manufacturer,
                 model_number: model_number,
                 sold_by: sold_by,
@@ -69,6 +74,11 @@ export const getDetail = async (req, res) => {
 //Delete detail
 export const deleteDetail = async (req, res) => {
     try {
+
+        if(!req.session.user && req.session.user.role !=='Admin') {
+            return res.status(400).send('No Session Found! Please Login Again')
+        }
+
         const data = await Details.deleteOne({"asin": req.body.asin});
 
         return res.status(200).send({"success": "Deleted Successfully!"})

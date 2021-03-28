@@ -6,6 +6,9 @@ export const addReview = async (req, res) => {
     const month = date.toLocaleString('default', { month:'long' });
 
     try {
+        if(!req.session.user) {
+            return res.status(400).send('No Session Found! Please Login Again')
+        }
         const response = await Review.updateOne(
             {"asin": req.params.asin},
             {
@@ -31,6 +34,11 @@ export const addReview = async (req, res) => {
 //Get reviews
 export const getReviews = async (req, res) => {
     try {
+
+        if(!req.session.user) {
+            return res.status(400).send('No Session Found! Please Login Again')
+        }
+
         const data = await Review.findOne({"asin": req.params.asin});
 
         return res.status(200).send(data);

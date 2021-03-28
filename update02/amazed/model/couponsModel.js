@@ -3,11 +3,11 @@ import validator from "validator";
 const CouponSchema = mongoose.Schema({
     couponName:String,
     couponCode:String,     
-    createdDate:String,
+    createdDate:Date,
     category:String,
     categoryNumber:Number,
     discountPercent: String,
-    expiryDate:String,
+    expiryDate:Date,
     usedBy: [{ type:String }]
 });
 
