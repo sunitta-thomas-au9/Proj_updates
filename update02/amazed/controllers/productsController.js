@@ -4,8 +4,9 @@ import Review from '../model/reviewModel.js';
 
 //add a product
 export const addNew = async(req,res) => {
-    console.log(req.body)
-    const { asin, category, product, type, price, reviews, title, thumbnail, description, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = req.body;
+
+    const asin = req.body.asin.toUpperCase();
+    const { category, product, type, price, reviews, title, thumbnail, description, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = req.body;
     const newProduct = new Products({ asin, category, product, type, price, reviews, title, thumbnail });
     const features = req.body.features.split(',');
 

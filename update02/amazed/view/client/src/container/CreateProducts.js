@@ -70,6 +70,7 @@ class CreateProducts extends React.Component {
             [name]: value
         })
     }
+
     submitImages = () => {  
         let urls = []      
         return this.state.imageFiles.map(image =>{
@@ -84,9 +85,13 @@ class CreateProducts extends React.Component {
             })
             .then(res =>res.json())
             .then(resp =>urls.push(resp.url))
-            return urls
+
+            if(this.state.imageFiles.length === urls.length) {
+                return urls
+            }
         })
     }
+
     submitThumbnail = () => {
         const data = new FormData()	
             data.append("file",this.state.thumbnailFile)	
@@ -98,11 +103,13 @@ class CreateProducts extends React.Component {
                 body:data	
             })            
     }
-    submit = async() => {
-        // console.log(this.state)
-        const { asin, category, product, type, price, reviews, title, thumbnail, description, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = this.state;
-        // if(asin && category && product && type && price && title) {
 
+    submit = async() => {
+
+        if(this.state.price.current_price && parseInt(this.state.price.current_price) > 0) {
+            // console.log(this.state)
+            const { asin, category, product, type, price, reviews, title, thumbnail, description, images, dimensions, weight, manufacturer, model_number, sold_by, brand } = this.state;
+            
             const result1 = await this.submitThumbnail();
             console.log(result1)
             const respdata = await result1.json();	
@@ -116,16 +123,18 @@ class CreateProducts extends React.Component {
                 images:result2[0]
             })
             await this.props.dispatch(createProduct(this.state)); 
+
+            console.log(this.state);
             
-            setTimeout(() => {
-                console.log(this.state)
-            },1000)
-        
-                      
             // setTimeout(() => {
-            //     this.props.history.push('/products')
-            // }, 1000)
-        // }
+            //     console.log(this.state)
+            // },1000)
+            
+                        
+            setTimeout(() => {
+                this.props.history.push('/products')
+            }, 1000)
+        }
 }
 
     render() {
