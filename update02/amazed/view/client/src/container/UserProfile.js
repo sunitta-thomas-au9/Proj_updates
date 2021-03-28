@@ -41,31 +41,32 @@ class UserProfile extends React.Component{
     updateUser = async(event) => {
         event.preventDefault();
         if(this.state.userDetails.imageUrl !== this.state.image && event.target.name !== "closeModal") {
-            const data = new FormData()	
-            data.append("file",this.state.image)
-            data.append("upload_preset","image-uploader")	
-            data.append("clone_name","sunitta")	
-            console.log(data)	
-            try{	
-                const resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',
-                {	
-                method:'POST',	
-                body:data	
-                })
-                const respdata = await resp.json();	
-                this.setState({
-                    userDetails:{
-                        ...this.state.userDetails,
-                        imageUrl:respdata.url
-                    }  
-                })
-            }
+            if(this.state.image) {
+                const data = new FormData()	
+                data.append("file", this.state.image)
+                data.append("upload_preset","image-uploader")	
+                data.append("clone_name","sunitta")	
+                console.log(data)	
+                try{	
+                    const resp = await fetch('https://api.cloudinary.com/v1_1/sunitta/image/upload',
+                    {	
+                    method:'POST',	
+                    body:data	
+                    })
+                    const respdata = await resp.json();	
+                    this.setState({
+                        userDetails:{
+                            ...this.state.userDetails,
+                            imageUrl:respdata.url
+                        }  
+                    })
+                }
 
-            catch (err) {	
-                this.setState({error:"Invalid User details"})	
+                catch (err) {	
+                    this.setState({error:"Invalid User details"})	
+                }
             }
         }
-        	
         const userData = {
             _id: this.state.userDetails._id,	
             name: this.state.userDetails.name,	

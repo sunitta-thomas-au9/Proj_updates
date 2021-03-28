@@ -19,6 +19,7 @@ import facebook from './routes/facebookRouter.js';
 import { G_Strategy } from './controllers/googleController.js';
 import { F_Strategy } from './controllers/facebookController.js';
 import './db/db.js';
+import { rateLimiter } from './utils/rateLimiter.js';
 
 const app = express();
 const PORT = process.env.PORT || 9800;
@@ -32,6 +33,9 @@ app.use(cors());
 app.use(session({
   'secret': 'amazed'
 }));
+
+// rate limit
+app.use(rateLimiter);
 
 //start passport
 app.use(passport.initialize());
